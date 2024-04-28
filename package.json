@@ -1,0 +1,17 @@
+{
+  "name": "sample-test",
+  "version": "1.0.0",
+  "description": "sample-test is an auto test framework.",
+  "main": "./src/main.js",
+  "scripts": {
+    "test": "node ./src/main.js"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "systeminformation": "^5.22.7",
+    "dayjs": "^1.11.10",
+    "lodash": "^4.17.21",
+    "puppeteer": "^22.6.5"
+  },
+  "type": "commonjs"
+}
