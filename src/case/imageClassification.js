@@ -58,7 +58,7 @@ async function image_classification_test() {
           screenshotFilename = sample + model + backend;
           await util.getScreenshot(page, screenshotFilename);
           // save alert warning message
-          errorMsg += util.getAlertWarning(page, pageElement.alertWaring);
+          errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);
         }
 
         // get results

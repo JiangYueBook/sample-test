@@ -23,7 +23,7 @@ function ensureDir(relativePath) {
 
 function getBrowserArgs(backend) {
   const borwserArgs = ["--start-maximized"];
-  if (["webnn_cpu", "webnn_gpu"].includes(backend)) {
+  if (backend.startsWith("webnn")) {
     borwserArgs.push(config["browserArgs"]);
   }
   return borwserArgs;
