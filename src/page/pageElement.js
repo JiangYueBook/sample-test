@@ -2,7 +2,7 @@ const pageElement = {
   // public element
   alertWaring: ".alert-warning > span", // css selector
   // model load result
-  loadTime: "#loadTime", 
+  loadTime: "#loadTime",
   buildTime: "#buildTime",
   computeTime: "#computeTime",
   // backend
@@ -29,7 +29,12 @@ const pageElement = {
   sien_with_a_cigar: "#sien-with-a-cigar",
   la_campesinos: "#la-campesinos",
   soup_distribution: "#soup-distribution",
-  wheatfield_with_crows: "#wheatfield_with_crows"
+  wheatfield_with_crows: "#wheatfield_with_crows",
+  // webnn_code_editor page
+  run_button: "#run",
+  edit_button: "#edit",
+  example_select: "#example-select",
+  console_log: "#console-log"
 };
 
 module.exports = pageElement;

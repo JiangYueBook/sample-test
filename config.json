@@ -3,14 +3,21 @@
   "browser": "chrome_canary",
   "browserArgs": "--enable-features=WebMachineLearningNeuralNetwork",
   "headless": true,
-  "timeout": 120000,
+  "timeout": 600000,
   "errorMsgMaxLength": 200,
-  "sampleURL" : {
+  "sampleURL": {
     "image_classification": "/image_classification/index.html",
     "fast_style_transfer": "/style_transfer/index.html",
-    "object_detection": "/object_detection/index.html"
+    "object_detection": "/object_detection/index.html",
+    "webnn_code_editor": "/code/index.html",
+    "handwritten_digits_classification": "/lenet/index.html",
+    "semantic_segmentation": "/semantic_segmentation/",
+    "face_recognition": "/face_recognition/index.html",
+    "facial_landmark_detection": "/facial_landmark_detection/index.html",
+    "noise_suppression_nsnet2": "/nsnet2/index.html",
+    "noise_suppression_rnnoise": "/rnnoise/index.html"
   },
-"image_classification": {
+  "image_classification": {
     "MobileNet_V2": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"],
     "SqueezeNet": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"],
     "ResNet_V2_50": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
@@ -21,5 +28,17 @@
   "object_detection": {
     "Tiny_Yolo_V2": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"],
     "SSD_MobileNet_V1": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+  },
+  "webnn_code_editor": {
+    "wasm": {
+      "mul_add.js": { "expected_value": "Output value: 1,1,1,1" },
+      "simple_graph.js": { "expected_value": "Output value: 2.25,2.25,2.25,2.25,2.25,2.25,2.25,2.25" },
+      "matmul.js": { "expected_value": "values: 1,1,1,1,1,1,1,1,1" }
+    },
+    "webnn": {
+      "mul_add.js": { "expected_value": "Output value: 1,1,1,1" },
+      "simple_graph.js": { "expected_value": "Output value: 2.25,2.25,2.25,2.25,2.25,2.25,2.25,2.25" },
+      "matmul.js": { "expected_value": "values: 1,1,1,1,1,1,1,1,1" }
+    }
   }
 }
