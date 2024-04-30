@@ -4,8 +4,8 @@ const pageElement = require("../page/pageElement.js");
 const _ = require("lodash");
 const path = require("path");
 
-async function image_classification_test() {
-  let sample = "image_classification";
+async function object_detection_test() {
+  let sample = "object_detection";
   let results = {};
   const configPath = path.join(path.resolve(__dirname), "../../config.json");
   const config = util.readJsonFile(configPath);
@@ -68,17 +68,11 @@ async function image_classification_test() {
 
         const computeTime = await page.$eval(pageElement["computeTime"], (el) => el.textContent);
 
-        const label0 = await page.$eval(pageElement["label0"], (el) => el.textContent);
-
-        const prob0 = await page.$eval(pageElement["prob0"], (el) => el.textContent);
-
         // set results
         let pageResults = {
           LoadTime: util.formatTimeResult(loadTime),
           BuildTime: util.formatTimeResult(buildTime),
           InferenceTime: util.formatTimeResult(computeTime),
-          Label: label0,
-          Probability: prob0,
           Error: errorMsg
         };
         pageResults = util.replaceEmptyData(pageResults);
@@ -98,4 +92,4 @@ async function image_classification_test() {
   return results;
 }
 
-module.exports = image_classification_test;
+module.exports = object_detection_test;

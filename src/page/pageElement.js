@@ -15,6 +15,8 @@ const pageElement = {
   MobileNet_V2: "#mobilenet",
   SqueezeNet: "#squeezenet",
   ResNet_V2_50: "#resnet50",
+  Tiny_Yolo_V2: "#tinyyolov2",
+  SSD_MobileNet_V1: "#ssdmobilenetv1",
   // image_classification page
   label0: "#label0",
   prob0: "#prob0",

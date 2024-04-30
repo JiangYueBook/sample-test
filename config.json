@@ -3,11 +3,12 @@
   "browser": "chrome_canary",
   "browserArgs": "--enable-features=WebMachineLearningNeuralNetwork",
   "headless": true,
-  "timeout": 600000,
+  "timeout": 120000,
   "errorMsgMaxLength": 200,
   "sampleURL" : {
     "image_classification": "/image_classification/index.html",
-    "fast_style_transfer": "/style_transfer/index.html"
+    "fast_style_transfer": "/style_transfer/index.html",
+    "object_detection": "/object_detection/index.html"
   },
 "image_classification": {
     "MobileNet_V2": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"],
@@ -16,5 +17,9 @@
   },
   "fast_style_transfer": {
     "starry_night": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+  },
+  "object_detection": {
+    "Tiny_Yolo_V2": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"],
+    "SSD_MobileNet_V1": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
   }
 }
