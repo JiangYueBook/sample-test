@@ -7,6 +7,7 @@ const face_recognition_test = require("./case/faceRecognition.js");
 const facial_landmark_detection_test = require("./case/facialLandmarkDetection.js");
 const handwritten_digits_classification_test = require("./case/handwrittenDigitsClassification.js");
 const noise_suppression_nsnet2_test = require("./case/noiseSuppressionNsnet2.js");
+const noise_suppression_rnnoise_test = require("./case/noiseSuppressionRnnoise.js");
 
 const util = require("./util.js");
 
@@ -24,7 +25,8 @@ async function main() {
   // const face_recognition_test_results = await face_recognition_test();
   // const facial_landmark_detection_test_results = await facial_landmark_detection_test();
   // const handwritten_digits_classification_test_results = await handwritten_digits_classification_test();
-  const noise_suppression_nsnet2_test_results = await noise_suppression_nsnet2_test();
+  // const noise_suppression_nsnet2_test_results = await noise_suppression_nsnet2_test();
+  const noise_suppression_rnnoise_test_results = await noise_suppression_rnnoise_test();
 
   // save results
   results.push(
@@ -37,7 +39,8 @@ async function main() {
     // face_recognition_test_results,
     // facial_landmark_detection_test_results,
     // handwritten_digits_classification_test_results,
-    noise_suppression_nsnet2_test_results
+    // noise_suppression_nsnet2_test_results,
+    noise_suppression_rnnoise_test_results
   );
   util.saveJsonFile(results);
 }

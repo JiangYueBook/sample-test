@@ -78,6 +78,12 @@ async function noise_suppression_nsnet2_test() {
         }
         // click sample audio button
         await page.click(pageElement[sample_audio]);
+        // wait for last results disappear
+        await util.delay(1000);
+        await page.waitForSelector(`::-p-xpath(${pageElement.done_text})`, {
+          visible: false,
+          timeout: config["timeout"]
+        });
         // wait for model running results
         try {
           await page.waitForSelector(`::-p-xpath(${pageElement.done_text})`, {
@@ -87,7 +93,7 @@ async function noise_suppression_nsnet2_test() {
         } catch (error) {
           errorMsg += `[PageTimeout]`;
           // save screenshot
-          screenshotFilename = sample + backend;
+          screenshotFilename = sample + backend + sample_audio;
           await util.getScreenshot(page, screenshotFilename);
           // save alert warning message
           errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);
@@ -96,27 +102,38 @@ async function noise_suppression_nsnet2_test() {
         const denoise_info_text_spans = await page.$$eval(pageElement["denoise_info_text_rows"], (elements) =>
           elements.map((element) => element.textContent)
         );
-
-        console.log("denoise_info_text_spans", denoise_info_text_spans);
-        // save screenshot
-        screenshotFilename = sample + backend;
-        await util.getScreenshot(page, screenshotFilename);
+        const STFT_compute_time = denoise_info_text_spans[0];
+        const NSNet2_compute_time = denoise_info_text_spans[1];
+        const iSTFT_compute_time = denoise_info_text_spans[2];
+        const process_time = denoise_info_text_spans[3];
         // set results
-        // let pageResults = {
-        //   LoadTime: util.formatTimeResult(loadTime),
-        //   BuildTime: util.formatTimeResult(buildTime),
-        //   InferenceTime: util.formatTimeResult(computeTime),
-        //   Error: errorMsg
-        // };
-        // pageResults = util.replaceEmptyData(pageResults);
-        // _.set(results, [sample, backend], pageResults);
-        // console.log("Test Results: ", pageResults);
+        let pageResults = {
+          STFT_compute_time,
+          NSNet2_compute_time,
+          iSTFT_compute_time,
+          process_time
+        };
+        pageResults = util.replaceEmptyData(pageResults);
+        _.set(results, [sample, backend, sample_audio], pageResults);
+        console.log(`Test results ${sample_audio}: `, pageResults);
       }
-      // get results
+      // get extra results
       const load_info_text_spans = await page.$$eval(pageElement["load_info_text_rows"], (elements) =>
-      elements.map((element) => element.textContent)
-    );
-    console.log("load_info_text_spans", load_info_text_spans);
+        elements.map((element) => element.textContent)
+      );
+      const loadTime = load_info_text_spans[0];
+      const buildTime = load_info_text_spans[1];
+      const warmupTime = load_info_text_spans[2];
+      // set results
+      let pageResults = {
+        loadTime,
+        buildTime,
+        warmupTime,
+        Error: errorMsg
+      };
+      pageResults = util.replaceEmptyData(pageResults);
+      _.set(results, [sample, backend, "extra_results"], pageResults);
+      console.log("extra results", pageResults);
 
       // close browser
       await browser.close();

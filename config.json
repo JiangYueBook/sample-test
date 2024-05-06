@@ -59,8 +59,8 @@
     "backend": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
   },
   "noise_suppression_nsnet2": {
-    "backend": ["webgl"],
-    "sample_audio": ["babbel_noise"]
+    "backend": ["webgl", "webnn_gpu"],
+    "sample_audio": ["babbel_noise", "car_noise", "street_noise"]
   },
   "noise_suppression_rnnoise": {
     "backend": ["wasm", "webgl", "webnn_gpu"],

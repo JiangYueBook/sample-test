@@ -4,8 +4,8 @@ const pageElement = require("../page/pageElement.js");
 const _ = require("lodash");
 const path = require("path");
 
-async function handwritten_digits_classification_test() {
-  let sample = "handwritten_digits_classification";
+async function noise_suppression_rnnoise_test() {
+  let sample = "noise_suppression_rnnoise";
   let results = {};
   const configPath = path.join(path.resolve(__dirname), "../../config.json");
   const config = util.readJsonFile(configPath);
@@ -44,9 +44,9 @@ async function handwritten_digits_classification_test() {
       await page.waitForSelector(`::-p-xpath(${pageElement.backendText})`);
       // choose backend
       await page.click(pageElement[backend]);
-      // wait for model building
+      // wait for model ready
       try {
-        await page.waitForSelector(pageElement["handwritten_digits_buildTime"], {
+        await page.waitForSelector(`::-p-xpath(${pageElement.ready_text})`, {
           visible: true,
           timeout: config["timeout"]
         });
@@ -58,18 +58,13 @@ async function handwritten_digits_classification_test() {
         // save alert warning message
         errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);
       }
-      // loop test
-      for (let i = 0; i < config[sample]["testRounds"]; i++) {
-        // click next button
-        if (i !== 0) {
-          await page.click(pageElement["next_button"]);
-        }
-        await util.delay(1000);
-        // click predict button
-        await page.click(pageElement["predict_button"]);
-        // wait for prediction result
+      // choose sample audio
+      for (let sample_audio of config[sample]["sample_audio"]) {
+        // click choose audio button
+        await page.click(pageElement["choose_audio_button"]);
+        // wait for dropdown menu
         try {
-          await page.waitForSelector(pageElement["handwritten_digits_inferenceTime"], {
+          await page.waitForSelector(pageElement[sample_audio], {
             visible: true,
             timeout: config["timeout"]
           });
@@ -81,34 +76,62 @@ async function handwritten_digits_classification_test() {
           // save alert warning message
           errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);
         }
-        console.log("get results 001");
-
+        // click sample audio button
+        await page.click(pageElement[sample_audio]);
+        // wait for last results disappear
+        await util.delay(1000);
+        await page.waitForSelector(`::-p-xpath(${pageElement.done_text})`, {
+          visible: false,
+          timeout: config["timeout"]
+        });
+        // wait for model running results
+        try {
+          await page.waitForSelector(`::-p-xpath(${pageElement.done_text})`, {
+            visible: true,
+            timeout: config["timeout"]
+          });
+        } catch (error) {
+          errorMsg += `[PageTimeout]`;
+          // save screenshot
+          screenshotFilename = sample + backend + sample_audio;
+          await util.getScreenshot(page, screenshotFilename);
+          // save alert warning message
+          errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);
+        }
         // get results
-        const inferenceTime = await page.$eval(pageElement["handwritten_digits_inferenceTime"], (el) => el.textContent);
-        const label0 = await page.$eval(pageElement["label0"], (el) => el.textContent);
-        const prob0 = await page.$eval(pageElement["prob0"], (el) => el.textContent);
-        const label1 = await page.$eval(pageElement["label1"], (el) => el.textContent);
-        const prob1 = await page.$eval(pageElement["prob1"], (el) => el.textContent);
-        const label2 = await page.$eval(pageElement["label2"], (el) => el.textContent);
-        const prob2 = await page.$eval(pageElement["prob2"], (el) => el.textContent);
-        // set results for this round test
+        const denoise_info_text_spans = await page.$$eval(pageElement["denoise_info_text_rows"], (elements) =>
+          elements.map((element) => element.textContent)
+        );
+        const preProcessing_time = denoise_info_text_spans[0];
+        const RNNoise_compute_time = denoise_info_text_spans[1];
+        const postProcessing_time = denoise_info_text_spans[2];
+        const process_time = denoise_info_text_spans[3];
+        // set results
         let pageResults = {
-          ExecutionTime: inferenceTime,
-          Label0: label0,
-          Probability0: prob0,
-          Label1: label1,
-          Probability1: prob1,
-          Label2: label2,
-          Probability2: prob2
+          preProcessing_time,
+          RNNoise_compute_time,
+          postProcessing_time,
+          process_time
         };
         pageResults = util.replaceEmptyData(pageResults);
-        _.set(results, [sample, backend, `round${i}`], pageResults);
-        console.log(`Test Results round${i}: `, pageResults);
+        _.set(results, [sample, backend, sample_audio], pageResults);
+        console.log(`Test results ${sample_audio}: `, pageResults);
       }
-      // get all extra results
-      const buildTime = await page.$eval(pageElement["handwritten_digits_buildTime"], (el) => el.textContent);
-      // set final results
-      _.set(results, [sample, backend, "extra_results"], { buildTime, Error: errorMsg });
+      // get extra results
+      const load_info_text_spans = await page.$$eval(pageElement["load_info_text_rows"], (elements) =>
+        elements.map((element) => element.textContent)
+      );
+      const loadTime = load_info_text_spans[0];
+      const buildTime = load_info_text_spans[1];
+      // set results
+      let pageResults = {
+        loadTime,
+        buildTime,
+        Error: errorMsg
+      };
+      pageResults = util.replaceEmptyData(pageResults);
+      _.set(results, [sample, backend, "extra_results"], pageResults);
+      console.log("extra results", pageResults);
 
       // close browser
       await browser.close();
@@ -122,4 +145,4 @@ async function handwritten_digits_classification_test() {
   return results;
 }
 
-module.exports = handwritten_digits_classification_test;
+module.exports = noise_suppression_rnnoise_test;
