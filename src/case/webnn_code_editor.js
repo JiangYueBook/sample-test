@@ -42,34 +42,24 @@ async function webnn_code_editor_test() {
 
       // wait for page text display
       await page.waitForSelector(pageElement["example_select"]);
-      await util.delay(10000);
+      // wait for code text display
+      await page.waitForSelector(pageElement["code_line"]);
       for (let example in config[sample][backend]) {
         // click dropdown
         await page.click(pageElement["example_select"]);
         // wait for option
         await page.waitForSelector(`${pageElement["example_select"]} option`);
-        await util.delay(1000);
         // choose option
-        await page.select('select', example);
-        // await page.evaluate((example) => {
-        //   const selectElement = document.querySelector(pageElement["example_select"]);
-        //   const options = Array.from(document.querySelectorAll(`${pageElement["example_select"]} option`));
-        //   options.forEach((option) => {
-        //     if (option.textContent === example) {
-        //       selectElement.value = option.textContent;
-        //       selectElement.dispatchEvent(new Event("change", { bubbles: true }));
-        //     }
-        //   });
-        // });
-
-        await util.delay(1000);
+        await page.select("select", example);
+        // wait for code text display
+        await util.delay(5000);
+        await page.waitForSelector(pageElement["code_line"]);
         // click run button
         await page.click(pageElement["run_button"]);
-        await util.delay(5000);
         // get console results
+        await util.delay(5000);
         const actual_value = await page.$eval(pageElement["console_log"], (el) => el.textContent);
         // set console results
-        console.log("config", config[sample][backend][example])
         let pageResults = {
           expected_value: config[sample][backend][example]["expected_value"],
           actual_value: actual_value,

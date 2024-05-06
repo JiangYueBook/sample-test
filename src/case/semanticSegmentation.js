@@ -4,8 +4,8 @@ const pageElement = require("../page/pageElement.js");
 const _ = require("lodash");
 const path = require("path");
 
-async function image_classification_test() {
-  let sample = "image_classification";
+async function semantic_segmentation_test() {
+  let sample = "semantic_segmentation";
   let results = {};
   const configPath = path.join(path.resolve(__dirname), "../../config.json");
   const config = util.readJsonFile(configPath);
@@ -68,24 +68,11 @@ async function image_classification_test() {
 
         const computeTime = await page.$eval(pageElement["computeTime"], (el) => el.textContent);
 
-        const label0 = await page.$eval(pageElement["label0"], (el) => el.textContent);
-        const prob0 = await page.$eval(pageElement["prob0"], (el) => el.textContent);
-        const label1 = await page.$eval(pageElement["label1"], (el) => el.textContent);
-        const prob1 = await page.$eval(pageElement["prob1"], (el) => el.textContent);
-        const label2 = await page.$eval(pageElement["label2"], (el) => el.textContent);
-        const prob2 = await page.$eval(pageElement["prob2"], (el) => el.textContent);
-
         // set results
         let pageResults = {
           LoadTime: util.formatTimeResult(loadTime),
           BuildTime: util.formatTimeResult(buildTime),
           InferenceTime: util.formatTimeResult(computeTime),
-          Label: label0,
-          Probability: prob0,
-          Label1: label1,
-          Probability1: prob1,
-          Label2: label2,
-          Probability2: prob2,
           Error: errorMsg
         };
         pageResults = util.replaceEmptyData(pageResults);
@@ -105,4 +92,4 @@ async function image_classification_test() {
   return results;
 }
 
-module.exports = image_classification_test;
+module.exports = semantic_segmentation_test;

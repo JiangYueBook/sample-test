@@ -35,10 +35,35 @@
       "simple_graph.js": { "expected_value": "Output value: 2.25,2.25,2.25,2.25,2.25,2.25,2.25,2.25" },
       "matmul.js": { "expected_value": "values: 1,1,1,1,1,1,1,1,1" }
     },
-    "webnn": {
+    "webnn_cpu": {
       "mul_add.js": { "expected_value": "Output value: 1,1,1,1" },
       "simple_graph.js": { "expected_value": "Output value: 2.25,2.25,2.25,2.25,2.25,2.25,2.25,2.25" },
       "matmul.js": { "expected_value": "values: 1,1,1,1,1,1,1,1,1" }
     }
+  },
+  "semantic_segmentation": {
+    "DeepLab_V3_MobileNet_V2": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+  },
+  "face_recognition": {
+    "FaceNet": {
+      "SSD_MobileNet_V2_Face": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+    }
+  },
+  "facial_landmark_detection": {
+    "SimpleCNN": {
+      "SSD_MobileNet_V2_Face": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+    }
+  },
+  "handwritten_digits_classification": {
+    "testRounds": 3,
+    "backend": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+  },
+  "noise_suppression_nsnet2": {
+    "backend": ["webgl"],
+    "sample_audio": ["babbel_noise"]
+  },
+  "noise_suppression_rnnoise": {
+    "backend": ["wasm", "webgl", "webnn_gpu"],
+    "sample_audio": ["background_noise_1", "background_noise_2", "background_noise_3"]
   }
 }
