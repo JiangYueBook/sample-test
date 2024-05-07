@@ -79,6 +79,10 @@ async function object_detection_test() {
         _.set(results, [sample, model, backend], pageResults);
         console.log("Test Results: ", pageResults);
 
+        // save canvas image
+        const canvas_image_name = `${sample}_${model}_${backend}`;
+        await util.saveCanvasimage(page, pageElement.object_detection_canvas, canvas_image_name);
+
         // close browser
         await browser.close();
       } catch (error) {

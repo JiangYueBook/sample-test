@@ -24,6 +24,8 @@ const pageElement = {
   Tiny_Yolo_V2: "#tinyyolov2",
   SSD_MobileNet_V1: "#ssdmobilenetv1",
   DeepLab_V3_MobileNet_V2: "#deeplabv3mnv2",
+  // canvas
+  object_detection_canvas: "#outputCanvas",
   // image_classification page
   label0: "#label0",
   prob0: "#prob0",
@@ -70,7 +72,7 @@ const pageElement = {
   // noise_suppression_rnnoise page
   background_noise_1: "#voice1",
   background_noise_2: "#voice2",
-  background_noise_3: "#voice3",
+  background_noise_3: "#voice3"
 };
 
 module.exports = pageElement;

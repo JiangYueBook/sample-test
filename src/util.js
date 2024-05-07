@@ -119,7 +119,29 @@ async function getScreenshot(page, filename) {
   console.log("screenshot has been saved in " + screenshotDir);
 }
 
-async function saveCanvasimage(element, filename) {}
+async function saveCanvasimage(page, canvas_element, filename) {
+  try {
+    const canvas = await page.$(canvas_element);
+    // get Canvas data URL
+    const canvasDataURL = await page.evaluate((canvas) => {
+      return canvas.toDataURL();
+    }, canvas);
+
+    //  transform URL to Buffer
+    const base64Data = canvasDataURL.replace(/^data:image\/png;base64,/, "");
+    const buffer = Buffer.from(base64Data, "base64");
+
+    // save image
+    const timestamp = getTimestamp();
+    const canvasDir = `${outDir}/${timestamp}/canvas_image`;
+    ensureDir(canvasDir);
+    fs.writeFileSync(`${canvasDir}/${filename}.png`, buffer);
+
+    console.log("canvas image has been saved in " + canvasDir);
+  } catch (error) {
+    console.log("canvas image save fail", error);
+  }
+}
 
 async function getAlertWarning(page, Alertlocation) {
   try {
