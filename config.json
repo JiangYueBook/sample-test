@@ -18,9 +18,20 @@
     "noise_suppression_rnnoise": "/rnnoise/index.html"
   },
   "image_classification": {
-    "MobileNet_V2": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"],
-    "SqueezeNet": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"],
-    "ResNet_V2_50": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+    "wasm": {
+      "fp32": ["MobileNet_V2", "SqueezeNet", "ResNet_50_V2"]
+    },
+    "webgl": {
+      "fp32": ["MobileNet_V2", "SqueezeNet", "ResNet_50_V2"],
+      "fp16": ["MobileNet_V2", "ResNet_50_V1", "EfficientNet"]
+    },
+    "webnn_cpu": {
+      "fp32": ["MobileNet_V2", "SqueezeNet", "ResNet_50_V2"]
+    },
+    "webnn_gpu": {
+      "fp32": ["MobileNet_V2", "SqueezeNet", "ResNet_50_V2"],
+      "fp16": ["MobileNet_V2", "ResNet_50_V1", "EfficientNet"]
+    }
   },
   "fast_style_transfer": {
     "starry_night": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]

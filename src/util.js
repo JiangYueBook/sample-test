@@ -119,6 +119,8 @@ async function getScreenshot(page, filename) {
   console.log("screenshot has been saved in " + screenshotDir);
 }
 
+async function saveCanvasimage(element, filename) {}
+
 async function getAlertWarning(page, Alertlocation) {
   try {
     return await page.$eval(Alertlocation, (el) => el.textContent);
@@ -229,6 +231,7 @@ module.exports = {
   getScreenshot,
   getAlertWarning,
   getConfig,
+  saveCanvasimage,
 
   chromePath,
   deviceInfo

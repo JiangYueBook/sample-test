@@ -5,6 +5,9 @@ const pageElement = {
   loadTime: "#loadTime",
   buildTime: "#buildTime",
   computeTime: "#computeTime",
+  // data type
+  fp32: "#float32",
+  fp16: "#float16",
   // backend
   backendText: "//span[text()='Backend']", // xpath selector
   wasm: "#polyfill_cpu",
@@ -15,7 +18,9 @@ const pageElement = {
   // model
   MobileNet_V2: "#mobilenet",
   SqueezeNet: "#squeezenet",
-  ResNet_V2_50: "#resnet50",
+  ResNet_50_V1: "#resnet50v1",
+  ResNet_50_V2: "#resnet50v2",
+  EfficientNet: "#efficientnet",
   Tiny_Yolo_V2: "#tinyyolov2",
   SSD_MobileNet_V1: "#ssdmobilenetv1",
   DeepLab_V3_MobileNet_V2: "#deeplabv3mnv2",
