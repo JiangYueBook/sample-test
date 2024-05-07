@@ -63,8 +63,8 @@ async function handwritten_digits_classification_test() {
         // click next button
         if (i !== 0) {
           await page.click(pageElement["next_button"]);
+          await util.delay(1000);
         }
-        await util.delay(1000);
         // click predict button
         await page.click(pageElement["predict_button"]);
         // wait for prediction result

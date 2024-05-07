@@ -79,9 +79,8 @@ async function noise_suppression_rnnoise_test() {
         // click sample audio button
         await page.click(pageElement[sample_audio]);
         // wait for last results disappear
-        await util.delay(1000);
         await page.waitForSelector(`::-p-xpath(${pageElement.done_text})`, {
-          visible: false,
+          hidden: true,
           timeout: config["timeout"]
         });
         // wait for model running results

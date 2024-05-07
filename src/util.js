@@ -114,8 +114,8 @@ async function getScreenshot(page, filename) {
   const timestampMinute = getTimestamp(true);
   const screenshotDir = `${outDir}/${timestamp}/screenshots`;
   ensureDir(screenshotDir);
-  // save entire page as a jpeg image
-  await page.screenshot({ path: `${screenshotDir}/${filename}${timestampMinute}.jpg`, type: "png" });
+  // save page as image
+  await page.screenshot({ path: `${screenshotDir}/${filename}${timestampMinute}.png`, type: "png" });
   console.log("screenshot has been saved in " + screenshotDir);
 }
 

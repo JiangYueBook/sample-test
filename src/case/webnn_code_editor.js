@@ -10,7 +10,7 @@ async function webnn_code_editor_test() {
   const configPath = path.join(path.resolve(__dirname), "../../config.json");
   const config = util.readJsonFile(configPath);
 
-  for (let backend in config[sample]) {
+  for (let backend of config[sample]["backend"]) {
     console.log(`${sample} ${backend} testing...`);
     // set browser args, browser path
     const args = util.getBrowserArgs(backend);
@@ -44,7 +44,7 @@ async function webnn_code_editor_test() {
       await page.waitForSelector(pageElement["example_select"]);
       // wait for code text display
       await page.waitForSelector(pageElement["code_line"]);
-      for (let example in config[sample][backend]) {
+      for (let example in config[sample]["example"]) {
         // click dropdown
         await page.click(pageElement["example_select"]);
         // wait for option
@@ -61,9 +61,9 @@ async function webnn_code_editor_test() {
         const actual_value = await page.$eval(pageElement["console_log"], (el) => el.textContent);
         // set console results
         let pageResults = {
-          expected_value: config[sample][backend][example]["expected_value"],
+          expected_value: config[sample]["example"][example]["expected_value"],
           actual_value: actual_value,
-          test_results: actual_value === config[sample][backend][example]["expected_value"] ? "pass" : "fail",
+          test_results: actual_value === config[sample]["example"][example]["expected_value"] ? "pass" : "fail",
           Error: errorMsg
         };
         _.set(results, [sample, backend, example], pageResults);

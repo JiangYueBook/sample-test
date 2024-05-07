@@ -11,6 +11,7 @@ const pageElement = {
   webgl: "#polyfill_gpu",
   webnn_cpu: "#webnn_cpu",
   webnn_gpu: "#webnn_gpu",
+  webnn_npu: "#webnn_npu",
   // model
   MobileNet_V2: "#mobilenet",
   SqueezeNet: "#squeezenet",

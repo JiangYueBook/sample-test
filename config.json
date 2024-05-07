@@ -30,12 +30,8 @@
     "SSD_MobileNet_V1": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
   },
   "webnn_code_editor": {
-    "wasm": {
-      "mul_add.js": { "expected_value": "Output value: 1,1,1,1" },
-      "simple_graph.js": { "expected_value": "Output value: 2.25,2.25,2.25,2.25,2.25,2.25,2.25,2.25" },
-      "matmul.js": { "expected_value": "values: 1,1,1,1,1,1,1,1,1" }
-    },
-    "webnn_cpu": {
+    "backend": ["wasm", "webnn_cpu"],
+    "example": {
       "mul_add.js": { "expected_value": "Output value: 1,1,1,1" },
       "simple_graph.js": { "expected_value": "Output value: 2.25,2.25,2.25,2.25,2.25,2.25,2.25,2.25" },
       "matmul.js": { "expected_value": "values: 1,1,1,1,1,1,1,1,1" }
