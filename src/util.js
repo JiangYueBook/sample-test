@@ -4,6 +4,8 @@ const { exec, execSync } = require("child_process");
 const si = require("systeminformation");
 const dayjs = require("dayjs");
 const path = require("path");
+const PNG = require("pngjs").PNG;
+const pixelmatch = require("pixelmatch");
 
 // get config from config.json
 const configPath = path.join(path.resolve(__dirname), "../config.json");
@@ -138,8 +140,38 @@ async function saveCanvasimage(page, canvas_element, filename) {
     fs.writeFileSync(`${canvasDir}/${filename}.png`, buffer);
 
     console.log("canvas image has been saved in " + canvasDir);
+    return { canvasPath: `${canvasDir}/${filename}.png` };
   } catch (error) {
     console.log("canvas image save fail", error);
+  }
+}
+
+async function compareImages(firstImagePath, secondImagePath) {
+  try {
+    const image1 = await new Promise((resolve, reject) => {
+      const image = fs.createReadStream(firstImagePath).pipe(new PNG());
+      image.on("parsed", () => resolve(image));
+      image.on("error", (error) => reject(error));
+    });
+
+    const image2 = await new Promise((resolve, reject) => {
+      const image = fs.createReadStream(secondImagePath).pipe(new PNG());
+      image.on("parsed", () => resolve(image));
+      image.on("error", (error) => reject(error));
+    });
+
+    if (image1.width !== image2.width || image1.height !== image2.height) {
+      throw new Error("image dimensions do not match");
+    }
+    const diff = new PNG({ width: image1.width, height: image1.height });
+    const numDiffentPixels = pixelmatch(image1.data, image2.data, diff.data, image1.width, image1.height, {
+      threshold: 0.2
+    });
+
+    return numDiffentPixels === 0 ? { equal: true } : { equal: false, numDiffentPixels };
+  } catch (error) {
+    console.log(error);
+    return { equal: "compare images failed" };
   }
 }
 
@@ -254,6 +286,7 @@ module.exports = {
   getAlertWarning,
   getConfig,
   saveCanvasimage,
+  compareImages,
 
   chromePath,
   deviceInfo

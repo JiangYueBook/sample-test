@@ -26,6 +26,14 @@ const pageElement = {
   DeepLab_V3_MobileNet_V2: "#deeplabv3mnv2",
   // canvas
   object_detection_canvas: "#outputCanvas",
+  handwritten_digits_classification_canvas : "#visual_canvas",
+  fast_style_transfer_input_canvas : "#inputCanvas",
+  fast_style_transfer_output_canvas : "#outputCanvas",
+  semantic_segmentation_canvas : "#outputCanvas",
+  semantic_segmentation_canvas : "#outputCanvas",
+  face_recognition_target_canvas : "#targetCanvasShow",
+  face_recognition_search_canvas : "#searchCanvasShow",
+  facial_landmark_detection_canvas : "#outputCanvas",
   // image_classification page
   label0: "#label0",
   prob0: "#prob0",
