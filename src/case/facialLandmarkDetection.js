@@ -10,10 +10,10 @@ async function facial_landmark_detection_test() {
   const configPath = path.join(path.resolve(__dirname), "../../config.json");
   const config = util.readJsonFile(configPath);
 
-  for (let facialLandmark in config[sample]) {
-    for (let model in config[sample][facialLandmark]) {
-      for (let backend of config[sample][facialLandmark][model]) {
-        console.log(`${sample} ${facialLandmark} ${model} ${backend} testing...`);
+  for (let backend in config[sample]) {
+    for (let facialLandmark in config[sample][backend]) {
+      for (let model of config[sample][backend][facialLandmark]) {
+        console.log(`${sample} ${backend} ${facialLandmark} ${model} testing...`);
         // set browser args, browser path
         const args = util.getBrowserArgs(backend);
         const browserPath = util.getBrowserPath(config.browser);
@@ -57,7 +57,7 @@ async function facial_landmark_detection_test() {
           } catch (error) {
             errorMsg += `[PageTimeout]`;
             // save screenshot
-            screenshotFilename = sample + facialLandmark + model + backend;
+            screenshotFilename = `${sample}_${backend}_${facialLandmark}_${model}`;
             await util.getScreenshot(page, screenshotFilename);
             // save alert warning message
             errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);

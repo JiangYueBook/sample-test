@@ -53,7 +53,7 @@ async function handwritten_digits_classification_test() {
       } catch (error) {
         errorMsg += `[PageTimeout]`;
         // save screenshot
-        screenshotFilename = sample + backend;
+        screenshotFilename = `${sample}_${backend}`;
         await util.getScreenshot(page, screenshotFilename);
         // save alert warning message
         errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);
@@ -93,13 +93,13 @@ async function handwritten_digits_classification_test() {
         const prob2 = await page.$eval(pageElement["prob2"], (el) => el.textContent);
         // set results for this round test
         let pageResults = {
-          ExecutionTime: inferenceTime,
           Label0: label0,
           Probability0: prob0,
           Label1: label1,
           Probability1: prob1,
           Label2: label2,
-          Probability2: prob2
+          Probability2: prob2,
+          ExecutionTime: inferenceTime
         };
         pageResults = util.replaceEmptyData(pageResults);
         _.set(results, [sample, backend, `round${i}`], pageResults);

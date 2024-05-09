@@ -22,8 +22,7 @@
       "fp32": ["MobileNet_V2", "SqueezeNet", "ResNet_50_V2"]
     },
     "webgl": {
-      "fp32": ["MobileNet_V2", "SqueezeNet", "ResNet_50_V2"],
-      "fp16": ["MobileNet_V2", "ResNet_50_V1", "EfficientNet"]
+      "fp32": ["MobileNet_V2", "SqueezeNet", "ResNet_50_V2"]
     },
     "webnn_cpu": {
       "fp32": ["MobileNet_V2", "SqueezeNet", "ResNet_50_V2"]
@@ -34,11 +33,16 @@
     }
   },
   "fast_style_transfer": {
-    "starry_night": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+    "wasm": ["starry_night"],
+    "webgl": ["starry_night"],
+    "webnn_cpu": ["starry_night"],
+    "webnn_gpu": ["starry_night"]
   },
   "object_detection": {
-    "Tiny_Yolo_V2": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"],
-    "SSD_MobileNet_V1": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+    "wasm": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"],
+    "webgl": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"],
+    "webnn_cpu": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"],
+    "webnn_gpu": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"]
   },
   "webnn_code_editor": {
     "backend": ["wasm", "webnn_cpu"],
@@ -49,16 +53,37 @@
     }
   },
   "semantic_segmentation": {
-    "DeepLab_V3_MobileNet_V2": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+    "wasm": ["DeepLab_V3_MobileNet_V2"],
+    "webgl": ["DeepLab_V3_MobileNet_V2"],
+    "webnn_cpu": ["DeepLab_V3_MobileNet_V2"],
+    "webnn_gpu": ["DeepLab_V3_MobileNet_V2"]
   },
   "face_recognition": {
-    "FaceNet": {
-      "SSD_MobileNet_V2_Face": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+    "wasm": {
+      "FaceNet": ["SSD_MobileNet_V2_Face"]
+    },
+    "webgl": {
+      "FaceNet": ["SSD_MobileNet_V2_Face"]
+    },
+    "webnn_cpu": {
+      "FaceNet": ["SSD_MobileNet_V2_Face"]
+    },
+    "webnn_gpu": {
+      "FaceNet": ["SSD_MobileNet_V2_Face"]
     }
   },
   "facial_landmark_detection": {
-    "SimpleCNN": {
-      "SSD_MobileNet_V2_Face": ["wasm", "webgl", "webnn_cpu", "webnn_gpu"]
+    "wasm": {
+      "SimpleCNN": ["SSD_MobileNet_V2_Face"]
+    },
+    "webgl": {
+      "SimpleCNN": ["SSD_MobileNet_V2_Face"]
+    },
+    "webnn_cpu": {
+      "SimpleCNN": ["SSD_MobileNet_V2_Face"]
+    },
+    "webnn_gpu": {
+      "SimpleCNN": ["SSD_MobileNet_V2_Face"]
     }
   },
   "handwritten_digits_classification": {

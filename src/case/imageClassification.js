@@ -57,7 +57,7 @@ async function image_classification_test() {
           } catch (error) {
             errorMsg += `[PageTimeout]`;
             // save screenshot
-            screenshotFilename = sample + backend + data_type + model;
+            screenshotFilename = `${sample}_${backend}_${data_type}_${model}`;
             await util.getScreenshot(page, screenshotFilename);
             // save alert warning message
             errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);

@@ -10,10 +10,10 @@ async function face_recognition_test() {
   const configPath = path.join(path.resolve(__dirname), "../../config.json");
   const config = util.readJsonFile(configPath);
 
-  for (let faceRecognition in config[sample]) {
-    for (let model in config[sample][faceRecognition]) {
-      for (let backend of config[sample][faceRecognition][model]) {
-        console.log(`${sample} ${faceRecognition} ${model} ${backend} testing...`);
+  for (let backend in config[sample]) {
+    for (let faceRecognition in config[sample][backend]) {
+      for (let model of config[sample][backend][faceRecognition]) {
+        console.log(`${sample} ${backend} ${faceRecognition} ${model} testing...`);
         // set browser args, browser path
         const args = util.getBrowserArgs(backend);
         const browserPath = util.getBrowserPath(config.browser);
@@ -57,7 +57,7 @@ async function face_recognition_test() {
           } catch (error) {
             errorMsg += `[PageTimeout]`;
             // save screenshot
-            screenshotFilename = sample + faceRecognition + model + backend;
+            screenshotFilename = `${sample}_${backend}_${faceRecognition}_${model}`;
             await util.getScreenshot(page, screenshotFilename);
             // save alert warning message
             errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);
@@ -78,14 +78,14 @@ async function face_recognition_test() {
             Error: errorMsg
           };
           pageResults = util.replaceEmptyData(pageResults);
-          _.set(results, [sample, faceRecognition, model, backend], pageResults);
+          _.set(results, [sample, backend, faceRecognition, model], pageResults);
           console.log("Test Results: ", pageResults);
 
           // close browser
           await browser.close();
         } catch (error) {
           console.log(error);
-          _.set(results, [sample, faceRecognition, model, backend, "Error"], error.message);
+          _.set(results, [sample, backend, faceRecognition, model, "Error"], error.message);
           await browser.close();
           continue;
         }

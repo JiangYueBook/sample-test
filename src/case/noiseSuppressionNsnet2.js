@@ -53,7 +53,7 @@ async function noise_suppression_nsnet2_test() {
       } catch (error) {
         errorMsg += `[PageTimeout]`;
         // save screenshot
-        screenshotFilename = sample + backend;
+        screenshotFilename = `${sample}_${backend}`;
         await util.getScreenshot(page, screenshotFilename);
         // save alert warning message
         errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);

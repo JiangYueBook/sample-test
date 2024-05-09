@@ -10,9 +10,9 @@ async function semantic_segmentation_test() {
   const configPath = path.join(path.resolve(__dirname), "../../config.json");
   const config = util.readJsonFile(configPath);
 
-  for (let model in config[sample]) {
-    for (let backend of config[sample][model]) {
-      console.log(`${sample} ${model} ${backend} testing...`);
+  for (let backend in config[sample]) {
+    for (let model of config[sample][backend]) {
+      console.log(`${sample} ${backend} ${model} testing...`);
       // set browser args, browser path
       const args = util.getBrowserArgs(backend);
       const browserPath = util.getBrowserPath(config.browser);
@@ -55,7 +55,7 @@ async function semantic_segmentation_test() {
         } catch (error) {
           errorMsg += `[PageTimeout]`;
           // save screenshot
-          screenshotFilename = sample + model + backend;
+          screenshotFilename = `${sample}_${backend}_${model}`;
           await util.getScreenshot(page, screenshotFilename);
           // save alert warning message
           errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);
@@ -76,14 +76,14 @@ async function semantic_segmentation_test() {
           Error: errorMsg
         };
         pageResults = util.replaceEmptyData(pageResults);
-        _.set(results, [sample, model, backend], pageResults);
+        _.set(results, [sample, backend, model], pageResults);
         console.log("Test Results: ", pageResults);
 
         // close browser
         await browser.close();
       } catch (error) {
         console.log(error);
-        _.set(results, [sample, model, backend, "Error"], error.message);
+        _.set(results, [sample, backend, model, "Error"], error.message);
         await browser.close();
         continue;
       }
