@@ -9,6 +9,7 @@ async function face_recognition_test() {
   let results = {};
   const configPath = path.join(path.resolve(__dirname), "../../config.json");
   const config = util.readJsonFile(configPath);
+  const expectedCanvas = path.join(path.resolve(__dirname), "../../lib/canvas");
 
   for (let backend in config[sample]) {
     for (let faceRecognition in config[sample][backend]) {
@@ -70,11 +71,48 @@ async function face_recognition_test() {
 
           const computeTime = await page.$eval(pageElement["computeTime"], (el) => el.textContent);
 
+          // save canvas image
+          let compareImagesResults_target, compareImagesResults_serch;
+          if (!errorMsg.includes("PageTimeout")) {
+            try {
+              const canvas_image_name_target = `${sample}_${backend}_${model}_target`;
+              const canvas_image_name_search = `${sample}_${backend}_${model}_search`;
+
+              const saveCanvasResult_target = await util.saveCanvasimage(
+                page,
+                pageElement.face_recognition_target_canvas,
+                canvas_image_name_target
+              );
+              const saveCanvasResult_search = await util.saveCanvasimage(
+                page,
+                pageElement.face_recognition_search_canvas,
+                canvas_image_name_search
+              );
+
+              // compare canvas to expected canvas
+              const expectedCanvasPath_target = `${expectedCanvas}/${sample}_${model}_target.png`;
+              compareImagesResults_target = await util.compareImages(
+                saveCanvasResult_target.canvasPath,
+                expectedCanvasPath_target
+              );
+
+              // compare canvas to expected canvas
+              const expectedCanvasPath_search = `${expectedCanvas}/${sample}_${model}_search.png`;
+              compareImagesResults_serch = await util.compareImages(
+                saveCanvasResult_search.canvasPath,
+                expectedCanvasPath_search
+              );
+            } catch (error) {
+              console.log(error);
+            }
+          }
+
           // set results
           let pageResults = {
             LoadTime: util.formatTimeResult(loadTime),
             BuildTime: util.formatTimeResult(buildTime),
             InferenceTime: util.formatTimeResult(computeTime),
+            compareImagesResults: { compareImagesResults_target, compareImagesResults_serch },
             Error: errorMsg
           };
           pageResults = util.replaceEmptyData(pageResults);

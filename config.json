@@ -5,6 +5,7 @@
   "headless": true,
   "timeout": 600000,
   "errorMsgMaxLength": 200,
+  "imageCompareThreshold": 0.1,
   "sampleURL": {
     "image_classification": "/image_classification/index.html",
     "fast_style_transfer": "/style_transfer/index.html",

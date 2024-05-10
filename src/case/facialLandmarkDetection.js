@@ -9,6 +9,7 @@ async function facial_landmark_detection_test() {
   let results = {};
   const configPath = path.join(path.resolve(__dirname), "../../config.json");
   const config = util.readJsonFile(configPath);
+  const expectedCanvas = path.join(path.resolve(__dirname), "../../lib/canvas");
 
   for (let backend in config[sample]) {
     for (let facialLandmark in config[sample][backend]) {
@@ -70,11 +71,30 @@ async function facial_landmark_detection_test() {
 
           const computeTime = await page.$eval(pageElement["computeTime"], (el) => el.textContent);
 
+          // save canvas image
+          let compareImagesResults;
+          if (!errorMsg.includes("PageTimeout")) {
+            try {
+              const canvas_image_name = `${sample}_${backend}_${model}`;
+              const saveCanvasResult = await util.saveCanvasimage(
+                page,
+                pageElement.facial_landmark_detection_canvas,
+                canvas_image_name
+              );
+              // compare canvas to expected canvas
+              const expectedCanvasPath = `${expectedCanvas}/${sample}_${model}.png`;
+              compareImagesResults = await util.compareImages(saveCanvasResult.canvasPath, expectedCanvasPath);
+            } catch (error) {
+              console.log(error);
+            }
+          }
+
           // set results
           let pageResults = {
             LoadTime: util.formatTimeResult(loadTime),
             BuildTime: util.formatTimeResult(buildTime),
             InferenceTime: util.formatTimeResult(computeTime),
+            compareImagesResults,
             Error: errorMsg
           };
           pageResults = util.replaceEmptyData(pageResults);

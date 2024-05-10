@@ -30,7 +30,6 @@ const pageElement = {
   fast_style_transfer_input_canvas : "#inputCanvas",
   fast_style_transfer_output_canvas : "#outputCanvas",
   semantic_segmentation_canvas : "#outputCanvas",
-  semantic_segmentation_canvas : "#outputCanvas",
   face_recognition_target_canvas : "#targetCanvasShow",
   face_recognition_search_canvas : "#searchCanvasShow",
   facial_landmark_detection_canvas : "#outputCanvas",

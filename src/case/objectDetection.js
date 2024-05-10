@@ -72,15 +72,19 @@ async function object_detection_test() {
         // save canvas image
         let compareImagesResults;
         if (!errorMsg.includes("PageTimeout")) {
-          const canvas_image_name = `${sample}_${backend}_${model}`;
-          const saveCanvasResult = await util.saveCanvasimage(
-            page,
-            pageElement.object_detection_canvas,
-            canvas_image_name
-          );
-          // compare canvas to expected canvas
-          const expectedCanvasPath = `${expectedCanvas}/${sample}_${model}.png`;
-          compareImagesResults = await util.compareImages(saveCanvasResult.canvasPath, expectedCanvasPath);        
+          try {
+            const canvas_image_name = `${sample}_${backend}_${model}`;
+            const saveCanvasResult = await util.saveCanvasimage(
+              page,
+              pageElement.object_detection_canvas,
+              canvas_image_name
+            );
+            // compare canvas to expected canvas
+            const expectedCanvasPath = `${expectedCanvas}/${sample}_${model}.png`;
+            compareImagesResults = await util.compareImages(saveCanvasResult.canvasPath, expectedCanvasPath);
+          } catch (error) {
+            console.log(error);
+          }
         }
 
         // set results

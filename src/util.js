@@ -139,7 +139,7 @@ async function saveCanvasimage(page, canvas_element, filename) {
     ensureDir(canvasDir);
     fs.writeFileSync(`${canvasDir}/${filename}.png`, buffer);
 
-    console.log("canvas image has been saved in " + canvasDir);
+    // console.log("canvas image has been saved in " + canvasDir);
     return { canvasPath: `${canvasDir}/${filename}.png` };
   } catch (error) {
     console.log("canvas image save fail", error);
@@ -165,7 +165,7 @@ async function compareImages(firstImagePath, secondImagePath) {
     }
     const diff = new PNG({ width: image1.width, height: image1.height });
     const numDiffentPixels = pixelmatch(image1.data, image2.data, diff.data, image1.width, image1.height, {
-      threshold: 0.2
+      threshold: config["imageCompareThreshold"]
     });
 
     return numDiffentPixels === 0 ? { equal: true } : { equal: false, numDiffentPixels };

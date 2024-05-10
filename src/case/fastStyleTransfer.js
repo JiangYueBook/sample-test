@@ -9,6 +9,7 @@ async function fast_style_transfer_test() {
   let results = {};
   const configPath = path.join(path.resolve(__dirname), "../../config.json");
   const config = util.readJsonFile(configPath);
+  const expectedCanvas = path.join(path.resolve(__dirname), "../../lib/canvas");
 
   for (let backend in config[sample]) {
     for (let model of config[sample][backend]) {
@@ -68,11 +69,38 @@ async function fast_style_transfer_test() {
 
         const computeTime = await page.$eval(pageElement["computeTime"], (el) => el.textContent);
 
+        // save canvas image
+        let compareImagesResults;
+        if (!errorMsg.includes("PageTimeout")) {
+          try {
+            // const canvas_image_name_input = `${sample}_${backend}_${model}_input`;
+            const canvas_image_name_output = `${sample}_${backend}_${model}_output`;
+
+            // const saveCanvasResult_input = await util.saveCanvasimage(
+            //   page,
+            //   pageElement.fast_style_transfer_input_canvas,
+            //   canvas_image_name_input
+            // );
+            const saveCanvasResult_output = await util.saveCanvasimage(
+              page,
+              pageElement.fast_style_transfer_output_canvas,
+              canvas_image_name_output
+            );
+
+            // compare canvas to expected canvas
+            const expectedCanvasPath = `${expectedCanvas}/${sample}_${model}_output.png`;
+            compareImagesResults = await util.compareImages(saveCanvasResult_output.canvasPath, expectedCanvasPath);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+
         // set results
         let pageResults = {
           LoadTime: util.formatTimeResult(loadTime),
           BuildTime: util.formatTimeResult(buildTime),
           InferenceTime: util.formatTimeResult(computeTime),
+          compareImagesResults,
           Error: errorMsg
         };
         pageResults = util.replaceEmptyData(pageResults);

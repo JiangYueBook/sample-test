@@ -68,6 +68,12 @@ async function semantic_segmentation_test() {
 
         const computeTime = await page.$eval(pageElement["computeTime"], (el) => el.textContent);
 
+        // save screenshot
+        if (!errorMsg.includes("PageTimeout")) {
+          screenshotFilename = `${sample}_${backend}_${model}`;
+          await util.getScreenshot(page, screenshotFilename);
+        }
+
         // set results
         let pageResults = {
           LoadTime: util.formatTimeResult(loadTime),
