@@ -40,10 +40,19 @@
     "webnn_gpu": ["starry_night"]
   },
   "object_detection": {
-    "wasm": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"],
-    "webgl": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"],
-    "webnn_cpu": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"],
-    "webnn_gpu": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"]
+    "wasm": {
+      "fp32": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"]
+    },
+    "webgl": {
+      "fp32": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"]
+    },
+    "webnn_cpu": {
+      "fp32": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"]
+    },
+    "webnn_gpu": {
+      "fp32": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"],
+      "fp16": ["Tiny_Yolo_V2", "SSD_MobileNet_V1"]
+    }
   },
   "webnn_code_editor": {
     "backend": ["wasm", "webnn_cpu"],
