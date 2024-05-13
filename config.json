@@ -1,7 +1,8 @@
 {
   "testURL": "https://webmachinelearning.github.io/webnn-samples",
   "browser": "chrome_canary",
-  "browserArgs": "--enable-features=WebMachineLearningNeuralNetwork",
+  "browserArgs": "--start-maximized",
+  "browserArgsWebnn": "--enable-features=WebMachineLearningNeuralNetwork",
   "headless": true,
   "timeout": 600000,
   "errorMsgMaxLength": 200,

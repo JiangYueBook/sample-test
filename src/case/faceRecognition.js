@@ -72,7 +72,7 @@ async function face_recognition_test() {
           const computeTime = await page.$eval(pageElement["computeTime"], (el) => el.textContent);
 
           // save canvas image
-          let compareImagesResults_target, compareImagesResults_serch;
+          let compareImagesResults_target = "", compareImagesResults_serch = "";
           if (!errorMsg.includes("PageTimeout")) {
             try {
               const canvas_image_name_target = `${sample}_${backend}_${model}_target`;

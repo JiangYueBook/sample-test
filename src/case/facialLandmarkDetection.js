@@ -72,7 +72,7 @@ async function facial_landmark_detection_test() {
           const computeTime = await page.$eval(pageElement["computeTime"], (el) => el.textContent);
 
           // save canvas image
-          let compareImagesResults;
+          let compareImagesResults = "";
           if (!errorMsg.includes("PageTimeout")) {
             try {
               const canvas_image_name = `${sample}_${backend}_${model}`;

@@ -70,7 +70,7 @@ async function fast_style_transfer_test() {
         const computeTime = await page.$eval(pageElement["computeTime"], (el) => el.textContent);
 
         // save canvas image
-        let compareImagesResults;
+        let compareImagesResults = "";
         if (!errorMsg.includes("PageTimeout")) {
           try {
             // const canvas_image_name_input = `${sample}_${backend}_${model}_input`;

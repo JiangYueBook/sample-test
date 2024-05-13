@@ -24,9 +24,9 @@ function ensureDir(relativePath) {
 }
 
 function getBrowserArgs(backend) {
-  const borwserArgs = ["--start-maximized"];
+  const borwserArgs = [config["browserArgs"]];
   if (backend.startsWith("webnn")) {
-    borwserArgs.push(config["browserArgs"]);
+    borwserArgs.push(config["browserArgsWebnn"]);
   }
   return borwserArgs;
 }
@@ -41,8 +41,7 @@ function getBrowserPath(browser) {
     if (deviceInfo.platform === "linux") {
       browserPath = "/usr/bin/google-chrome-unstable";
     }
-  }
-  if (browser === "chrome_stable") {
+  } else if (browser === "chrome_stable") {
     chromePath = "Chrome";
     if (deviceInfo.platform === "win32") {
       browserPath = `${process.env.PROGRAMFILES}/Google/Chrome/Application/chrome.exe`;
@@ -50,6 +49,8 @@ function getBrowserPath(browser) {
     if (deviceInfo.platform === "linux") {
       browserPath = "/usr/bin/google-chrome-stable";
     }
+  } else {
+    browserPath = config["browser"];
   }
   return browserPath;
 }
@@ -190,6 +191,7 @@ async function getConfig() {
   deviceInfo["testURL"] = config["testURL"];
   deviceInfo["browser"] = config["browser"];
   deviceInfo["browserArgs"] = config["browserArgs"];
+  deviceInfo["browserArgsWebnn"] = config["browserArgsWebnn"];
   getBrowserPath(deviceInfo["browser"]);
   // Chrome
   if (deviceInfo.platform === "win32" && deviceInfo["browser"].match("chrome_")) {

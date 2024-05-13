@@ -93,7 +93,6 @@ async function handwritten_digits_classification_test() {
         const prob2 = await page.$eval(pageElement["prob2"], (el) => el.textContent);
 
         // save canvas image
-        let compareImagesResults;
         if (!errorMsg.includes("PageTimeout")) {
           try {
             const canvas_image_name = `${sample}_${backend}_round${i}`;
