@@ -75,7 +75,7 @@ async function object_detection_test() {
           let compareImagesResults = "";
           if (!errorMsg.includes("PageTimeout")) {
             try {
-              const canvas_image_name = `${sample}_${backend}_${model}`;
+              const canvas_image_name = `${sample}_${backend}_${data_type}_${model}`;
               const saveCanvasResult = await util.saveCanvasimage(
                 page,
                 pageElement.object_detection_canvas,
