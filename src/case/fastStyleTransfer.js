@@ -116,8 +116,8 @@ async function fast_style_transfer_test() {
         continue;
       }
     }
-    return results;
   }
+  return results;
 }
 
 module.exports = fast_style_transfer_test;
