@@ -8,12 +8,12 @@ const PNG = require("pngjs").PNG;
 const pixelmatch = require("pixelmatch");
 
 // get config from config.json
-const configPath = path.join(path.resolve(__dirname), "../config.json");
+const configPath = replacePathString(path.join(path.resolve(__dirname), "../config.json"));
 const config = readJsonFile(configPath);
 let deviceInfo = {};
 let chromePath;
 // test results directory
-const outDir = path.join(path.resolve(__dirname), "../out");
+const outDir = replacePathString(path.join(path.resolve(__dirname), "../out"));
 ensureDir(outDir);
 
 function ensureDir(relativePath) {
@@ -23,10 +23,18 @@ function ensureDir(relativePath) {
   }
 }
 
+// replace path string \ to /
+function replacePathString(str) {
+  return str.replace(/\\/g, "/");
+}
+
 function getBrowserArgs(backend) {
   const borwserArgs = [config["browserArgs"]];
   if (backend.startsWith("webnn")) {
     borwserArgs.push(config["browserArgsWebnn"]);
+  }
+  if (backend === "webnn_npu") {
+    borwserArgs.push(config["browserArgsWebnnNPU"]);
   }
   return borwserArgs;
 }
@@ -73,13 +81,13 @@ function saveJsonFile(data) {
   const directoryPath = `${outDir}/${timestamp}`;
   ensureDir(directoryPath);
   const filePath = `${directoryPath}/${timestampMinute}.json`;
-  fs.writeFile(filePath, jsonData, (err) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log("json file has been saved in " + filePath);
-    }
-  });
+  try {
+    fs.writeFileSync(filePath, jsonData, "utf8");
+    console.log("json file has been saved in " + filePath);
+  } catch (error) {
+    console.log("json file save failed", error);
+  }
+  return filePath;
 }
 
 function getTimestamp(minute = false) {
@@ -181,6 +189,24 @@ async function getAlertWarning(page, Alertlocation) {
     return await page.$eval(Alertlocation, (el) => el.textContent);
   } catch (error) {
     return "";
+  }
+}
+
+async function judgeElemntclickable(page, pageElement, parent = false) {
+  let isDisabled = false;
+  // if parent element exists
+  if (!parent) {
+    isDisabled = await page.$eval(pageElement, (element) => element.classList.contains("disabled"));
+  } else {
+    isDisabled = await page.$eval(pageElement, (element) => element.parentElement.classList.contains("disabled"));
+  }
+
+  // click the element
+  if (isDisabled) {
+    return true;
+  } else {
+    await page.click(pageElement);
+    return false;
   }
 }
 
@@ -289,6 +315,7 @@ module.exports = {
   getConfig,
   saveCanvasimage,
   compareImages,
+  judgeElemntclickable,
 
   chromePath,
   deviceInfo

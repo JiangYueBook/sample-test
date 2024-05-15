@@ -3,6 +3,7 @@
   "browser": "chrome_canary",
   "browserArgs": "--start-maximized",
   "browserArgsWebnn": "--enable-features=WebMachineLearningNeuralNetwork",
+  "browserArgsWebnnNPU": "--use-redist-dml",
   "headless": true,
   "timeout": 600000,
   "errorMsgMaxLength": 200,
@@ -18,6 +19,16 @@
     "facial_landmark_detection": "/facial_landmark_detection/index.html",
     "noise_suppression_nsnet2": "/nsnet2/index.html",
     "noise_suppression_rnnoise": "/rnnoise/index.html"
+  },
+  "emailService": {
+    "serverConfig": {
+      "host": "ecsmtp.sh.test.com",
+      "port": 25,
+      "secure": false,
+      "auth": false
+    },
+    "from": "robot@test.com",
+    "to": "lex.li@test.com"
   },
   "image_classification": {
     "wasm": {

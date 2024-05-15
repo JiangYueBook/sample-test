@@ -10,6 +10,7 @@ const noise_suppression_nsnet2_test = require("./case/noiseSuppressionNsnet2.js"
 const noise_suppression_rnnoise_test = require("./case/noiseSuppressionRnnoise.js");
 
 const util = require("./util.js");
+const report = require("./report.js");
 
 const results = [];
 
@@ -42,7 +43,10 @@ async function main() {
     noise_suppression_nsnet2_test_results,
     noise_suppression_rnnoise_test_results
   );
-  util.saveJsonFile(results);
+  // save results to json file
+  const jsonPath = util.saveJsonFile(results);
+  // send report
+  await report(jsonPath);
 }
 
 main();

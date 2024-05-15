@@ -21,6 +21,7 @@ $ npm test
 * `timeout`: Browser page waiting time (ms), if the test device performance is poor, please set a larger value.
 * `imageCompareThreshold`: Images matching threshold, ranges from 0 to 1. Smaller values make the comparison more sensitive. 0.1 by default.
 * `sampleURL`: Each sample URL: testURL + sampleURL.
+* `emailService`: Edit the email config according to your server.
 * `sampleName`: Sample Name is an object, including model Name and backend.
 
 ## Support
