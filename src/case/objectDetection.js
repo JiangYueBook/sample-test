@@ -82,7 +82,7 @@ async function object_detection_test() {
                 canvas_image_name
               );
               // compare canvas to expected canvas
-              const expectedCanvasPath = `${expectedCanvas}/${sample}_${model}.png`;
+              const expectedCanvasPath = `${expectedCanvas}/${sample}_${data_type}_${model}.png`;
               compareImagesResults = await util.compareImages(saveCanvasResult.canvasPath, expectedCanvasPath);
             } catch (error) {
               console.log(error);
