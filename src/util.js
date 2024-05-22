@@ -6,6 +6,7 @@ const dayjs = require("dayjs");
 const path = require("path");
 const PNG = require("pngjs").PNG;
 const pixelmatch = require("pixelmatch");
+const prettier = require("prettier");
 
 // get config from config.json
 const configPath = replacePathString(path.join(path.resolve(__dirname), "../config.json"));
@@ -74,15 +75,16 @@ function readJsonFile(filePath) {
   }
 }
 
-function saveJsonFile(data) {
+async function saveJsonFile(data) {
   const jsonData = JSON.stringify(data);
+  const formattedJsonData = await prettier.format(jsonData, { parser: "json" });
   const timestamp = getTimestamp();
   const timestampMinute = getTimestamp(true);
   const directoryPath = `${outDir}/${timestamp}`;
   ensureDir(directoryPath);
   const filePath = `${directoryPath}/${timestampMinute}.json`;
   try {
-    fs.writeFileSync(filePath, jsonData, "utf8");
+    fs.writeFileSync(filePath, formattedJsonData, "utf8");
     console.log("json file has been saved in " + filePath);
   } catch (error) {
     console.log("json file save failed", error);

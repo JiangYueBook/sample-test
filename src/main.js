@@ -44,7 +44,7 @@ async function main() {
     noise_suppression_rnnoise_test_results
   );
   // save results to json file
-  const jsonPath = util.saveJsonFile(results);
+  const jsonPath = await util.saveJsonFile(results);
   // send report
   await report(jsonPath);
 }
