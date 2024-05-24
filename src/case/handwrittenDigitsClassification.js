@@ -25,12 +25,13 @@ async function handwritten_digits_classification_test() {
         defaultViewport: null,
         args,
         executablePath: browserPath,
-        ignoreHTTPSErrors: true
+        ignoreHTTPSErrors: true,
+        protocolTimeout: config["timeout"]
       });
       // open a new page
       const page = await browser.newPage();
       // set the default timeout time for the page
-      page.setDefaultTimeout(config.timeout);
+      page.setDefaultTimeout(config["timeout"]);
       // capture JS errors in the page
       page.on("error", (error) => {
         const pageerror = `[Error] ${error}`;
