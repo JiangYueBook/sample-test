@@ -9,6 +9,7 @@ const handwritten_digits_classification_test = require("./case/handwrittenDigits
 const noise_suppression_nsnet2_test = require("./case/noiseSuppressionNsnet2.js");
 const noise_suppression_rnnoise_test = require("./case/noiseSuppressionRnnoise.js");
 
+const { spawnSync } = require("child_process");
 const util = require("./util.js");
 const report = require("./report.js");
 
@@ -17,6 +18,8 @@ const results = [];
 async function main() {
   await util.getConfig();
   const deviceInfo = { deviceInfo: util.deviceInfo };
+  // try to kill chrome process
+  spawnSync("cmd", ["/c", "taskkill /F /IM chrome.exe /T"]);
   // run test cases
   const image_classification_test_results = await image_classification_test();
   const fast_style_transfer_test_results = await fast_style_transfer_test();

@@ -50,6 +50,22 @@ function getBrowserPath(browser) {
     if (deviceInfo.platform === "linux") {
       browserPath = "/usr/bin/google-chrome-unstable";
     }
+  } else if (browser === "chrome_dev") {
+    chromePath = "Chrome Dev";
+    if (deviceInfo.platform === "win32") {
+      browserPath = `${process.env.PROGRAMFILES}/Google/Chrome Dev/Application/chrome.exe`;
+    }
+    if (deviceInfo.platform === "linux") {
+      browserPath = "/usr/bin/google-chrome-unstable";
+    }
+  } else if (browser === "chrome_beta") {
+    chromePath = "Chrome Beta";
+    if (deviceInfo.platform === "win32") {
+      browserPath = `${process.env.PROGRAMFILES}/Google/Chrome Beta/Application/chrome.exe`;
+    }
+    if (deviceInfo.platform === "linux") {
+      browserPath = "/usr/bin/google-chrome-beta";
+    }
   } else if (browser === "chrome_stable") {
     chromePath = "Chrome";
     if (deviceInfo.platform === "win32") {

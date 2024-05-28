@@ -16,7 +16,7 @@ $ npm test
 ## Set config.json file
 
 * `testURL`: URL of WebNN Examples.
-* `browser`: Choose browser to run test. "chrome_canary", "chrome_stable" or your local chrome browser executable path e.g. "C:/workspace/chrome.exe"
+* `browser`: Choose browser to run test. "chrome_canary", "chrome_beta", "chrome_dev", "chrome_stable" or your local chrome browser executable path e.g. "C:/workspace/chrome.exe"
 * `headless`: Display chrome UI.
 * `timeout`: Browser page waiting time (ms), if the test device performance is poor, please set a larger value.
 * `imageCompareThreshold`: Images matching threshold, ranges from 0 to 1. Smaller values make the comparison more sensitive. 0.1 by default.

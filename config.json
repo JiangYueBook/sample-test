@@ -69,9 +69,11 @@
   "webnn_code_editor": {
     "backend": ["wasm", "webnn_cpu"],
     "example": {
+      "matmul.js": {
+        "expected_value": "values: 3.200000047683716,3.200000047683716,3.200000047683716,3.200000047683716,3.200000047683716,3.200000047683716,3.200000047683716,3.200000047683716,3.200000047683716"
+      },
       "mul_add.js": { "expected_value": "Output value: 1,1,1,1" },
-      "simple_graph.js": { "expected_value": "Output value: 2.25,2.25,2.25,2.25,2.25,2.25,2.25,2.25" },
-      "matmul.js": { "expected_value": "values: 1,1,1,1,1,1,1,1,1" }
+      "simple_graph.js": { "expected_value": "Output value: 2.25,2.25,2.25,2.25,2.25,2.25,2.25,2.25" }
     }
   },
   "semantic_segmentation": {
