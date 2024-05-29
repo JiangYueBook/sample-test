@@ -82,7 +82,6 @@ async function handwritten_digits_classification_test() {
           // save alert warning message
           errorMsg += await util.getAlertWarning(page, pageElement.alertWaring);
         }
-        console.log("get results 001");
 
         // get results
         const inferenceTime = await page.$eval(pageElement["handwritten_digits_inferenceTime"], (el) => el.textContent);

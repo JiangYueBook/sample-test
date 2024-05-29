@@ -1,3 +1,6 @@
+const { spawnSync } = require("child_process");
+const util = require("./util.js");
+const report = require("./report.js");
 const image_classification_test = require("./case/imageClassification.js");
 const fast_style_transfer_test = require("./case/fastStyleTransfer.js");
 const object_detection_test = require("./case/objectDetection.js");
@@ -8,10 +11,6 @@ const facial_landmark_detection_test = require("./case/facialLandmarkDetection.j
 const handwritten_digits_classification_test = require("./case/handwrittenDigitsClassification.js");
 const noise_suppression_nsnet2_test = require("./case/noiseSuppressionNsnet2.js");
 const noise_suppression_rnnoise_test = require("./case/noiseSuppressionRnnoise.js");
-
-const { spawnSync } = require("child_process");
-const util = require("./util.js");
-const report = require("./report.js");
 
 const results = [];
 
