@@ -12,39 +12,26 @@ const handwritten_digits_classification_test = require("./case/handwrittenDigits
 const noise_suppression_nsnet2_test = require("./case/noiseSuppressionNsnet2.js");
 const noise_suppression_rnnoise_test = require("./case/noiseSuppressionRnnoise.js");
 
-const results = [];
-
 async function main() {
+  const results = [];
+  // get device info
   await util.getConfig();
-  const deviceInfo = { deviceInfo: util.deviceInfo };
+  results.push({ deviceInfo: util.deviceInfo });
   // try to kill chrome process
   spawnSync("cmd", ["/c", "taskkill /F /IM chrome.exe /T"]);
-  // run test cases
-  const image_classification_test_results = await image_classification_test();
-  const fast_style_transfer_test_results = await fast_style_transfer_test();
-  const object_detection_test_results = await object_detection_test();
-  const webnn_code_editor_test_results = await webnn_code_editor_test();
-  const semantic_segmentation_test_results = await semantic_segmentation_test();
-  const face_recognition_test_results = await face_recognition_test();
-  const facial_landmark_detection_test_results = await facial_landmark_detection_test();
-  const handwritten_digits_classification_test_results = await handwritten_digits_classification_test();
-  const noise_suppression_nsnet2_test_results = await noise_suppression_nsnet2_test();
-  const noise_suppression_rnnoise_test_results = await noise_suppression_rnnoise_test();
 
-  // save results
-  results.push(
-    deviceInfo,
-    image_classification_test_results,
-    fast_style_transfer_test_results,
-    object_detection_test_results,
-    webnn_code_editor_test_results,
-    semantic_segmentation_test_results,
-    face_recognition_test_results,
-    facial_landmark_detection_test_results,
-    handwritten_digits_classification_test_results,
-    noise_suppression_nsnet2_test_results,
-    noise_suppression_rnnoise_test_results
-  );
+  // run test cases
+  results.push(await image_classification_test());
+  results.push(await fast_style_transfer_test());
+  results.push(await object_detection_test());
+  results.push(await webnn_code_editor_test());
+  results.push(await semantic_segmentation_test());
+  results.push(await face_recognition_test());
+  results.push(await facial_landmark_detection_test());
+  results.push(await handwritten_digits_classification_test());
+  results.push(await noise_suppression_nsnet2_test());
+  results.push(await noise_suppression_rnnoise_test());
+
   // save results to json file
   const jsonPath = await util.saveJsonFile(results);
   // send report
