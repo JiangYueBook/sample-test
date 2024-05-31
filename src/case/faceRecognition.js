@@ -73,7 +73,7 @@ async function face_recognition_test() {
           const computeTime = await page.$eval(pageElement["computeTime"], (el) => el.textContent);
 
           // save canvas image
-          let compareImagesResults_target = "", compareImagesResults_serch = "";
+          let compareImagesResults_target = "", compareImagesResults_search = "";
           if (!errorMsg.includes("PageTimeout")) {
             try {
               const canvas_image_name_target = `${sample}_${backend}_${model}_target`;
@@ -99,7 +99,7 @@ async function face_recognition_test() {
 
               // compare canvas to expected canvas
               const expectedCanvasPath_search = `${expectedCanvas}/${sample}_${model}_search.png`;
-              compareImagesResults_serch = await util.compareImages(
+              compareImagesResults_search = await util.compareImages(
                 saveCanvasResult_search.canvasPath,
                 expectedCanvasPath_search
               );
@@ -113,7 +113,7 @@ async function face_recognition_test() {
             LoadTime: util.formatTimeResult(loadTime),
             BuildTime: util.formatTimeResult(buildTime),
             InferenceTime: util.formatTimeResult(computeTime),
-            compareImagesResults: { compareImagesResults_target, compareImagesResults_serch },
+            compareImagesResults: { compareImagesResults_target, compareImagesResults_search },
             Error: errorMsg
           };
           pageResults = util.replaceEmptyData(pageResults);

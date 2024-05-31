@@ -43,7 +43,7 @@ async function report(filePath) {
   const reportTime = util.getTimestamp(true);
   let subject = `[WebNN Sample Test] ${hostname} ${reportTime}`;
   let text = `Test completed, please check the attachment.\n`;
-  text += `\nThanks,\nDev Team`;
+  text += `\nThanks,\nWebNN Team`;
   await sendMail(subject, text, filePath);
 }
 

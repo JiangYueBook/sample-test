@@ -124,14 +124,14 @@ async function noise_suppression_rnnoise_test() {
       const loadTime = load_info_text_spans[0];
       const buildTime = load_info_text_spans[1];
       // set results
-      let pageResults = {
+      let extraResults = {
         loadTime,
         buildTime,
         Error: errorMsg
       };
-      pageResults = util.replaceEmptyData(pageResults);
-      _.set(results, [sample, backend, "extra_results"], pageResults);
-      console.log("extra results", pageResults);
+      extraResults = util.replaceEmptyData(extraResults);
+      _.set(results, [sample, backend, "extra_results"], extraResults);
+      console.log("extra results", extraResults);
 
       // close browser
       await browser.close();

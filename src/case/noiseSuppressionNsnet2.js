@@ -125,15 +125,15 @@ async function noise_suppression_nsnet2_test() {
       const buildTime = load_info_text_spans[1];
       const warmupTime = load_info_text_spans[2];
       // set results
-      let pageResults = {
+      let extraResults = {
         loadTime,
         buildTime,
         warmupTime,
         Error: errorMsg
       };
-      pageResults = util.replaceEmptyData(pageResults);
-      _.set(results, [sample, backend, "extra_results"], pageResults);
-      console.log("extra results", pageResults);
+      extraResults = util.replaceEmptyData(extraResults);
+      _.set(results, [sample, backend, "extra_results"], extraResults);
+      console.log("extra results", extraResults);
 
       // close browser
       await browser.close();

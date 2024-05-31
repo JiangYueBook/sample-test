@@ -27,8 +27,8 @@
       "secure": false,
       "auth": false
     },
-    "from": "robot@test.com",
-    "to": "lex.li@test.com"
+    "from": "webnnsample@test.com",
+    "to": "xxx@test.com"
   },
   "image_classification": {
     "wasm": {
