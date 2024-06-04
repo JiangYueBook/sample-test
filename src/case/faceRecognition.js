@@ -42,7 +42,7 @@ async function face_recognition_test() {
           });
 
           // navigate the page to a URL
-          await page.goto(`${config["testURL"]}${config["sampleURL"][sample]}`);
+          await page.goto(`${config["testURL"]}${config["sampleURL"][sample]}`, { waitUntil: "networkidle0" });
 
           // wait for page text display
           await page.waitForSelector(`::-p-xpath(${pageElement.backendText})`);
@@ -73,7 +73,8 @@ async function face_recognition_test() {
           const computeTime = await page.$eval(pageElement["computeTime"], (el) => el.textContent);
 
           // save canvas image
-          let compareImagesResults_target = "", compareImagesResults_search = "";
+          let compareImagesResults_target = "",
+            compareImagesResults_search = "";
           if (!errorMsg.includes("PageTimeout")) {
             try {
               const canvas_image_name_target = `${sample}_${backend}_${model}_target`;

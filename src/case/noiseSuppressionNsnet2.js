@@ -39,7 +39,7 @@ async function noise_suppression_nsnet2_test() {
       });
 
       // navigate the page to a URL
-      await page.goto(`${config["testURL"]}${config["sampleURL"][sample]}`);
+      await page.goto(`${config["testURL"]}${config["sampleURL"][sample]}`, { waitUntil: "networkidle0" });
 
       // wait for page text display
       await page.waitForSelector(`::-p-xpath(${pageElement.backendText})`);
